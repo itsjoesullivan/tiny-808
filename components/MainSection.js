@@ -18,12 +18,26 @@ class MainSection extends Component {
           onChange={this.handleTempoChange.bind(this)}
         />
         {machine.tempo}
+        <div>
+          {machine.pattern[machine.activeSoundIndex][machine.activePatternSection].map(function(val, i) {
+            return <input
+              type="checkbox"
+              key={i}
+              checked={!!val}
+              onChange={this.handlePatternChange.bind(this, i)}
+            />
+          }.bind(this))}
+        </div>
       </section>
     )
   }
 
   handleTempoChange(e) {
     this.props.actions.changeTempo(parseInt(e.target.value))
+  }
+
+  handlePatternChange(i) {
+    this.props.actions.patternChange(i);
   }
 }
 

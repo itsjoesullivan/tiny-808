@@ -6,7 +6,6 @@ import * as MachineActions from '../actions'
 
 class App extends Component {
   render() {
-    console.log('render');
     const { machine, actions } = this.props
     return (
       <div>

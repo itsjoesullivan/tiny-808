@@ -1,1 +1,2 @@
 export const CHANGE_TEMPO = 'CHANGE_TEMPO';
+export const PATTERN_CHANGE = 'PATTERN_CHANGE';
