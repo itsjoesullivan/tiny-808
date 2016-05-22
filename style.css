@@ -1,0 +1,103 @@
+body {
+  font-family: Verdana, Geneva, sans-serif;
+}
+h1 {
+  text-align: center;
+}
+
+.highlighted {
+  background-color: yellow;
+}
+
+.range-name {
+  font-family: monospace;
+  display: inline-block;
+  width: 2em;
+}
+
+
+.sounds-range {
+  width: 27em;
+}
+
+
+label {
+  text-transform: capitalize;
+  display: inline-block;
+  width: 5em;
+}
+
+
+.main {
+  max-width: 320px;
+  margin: auto;
+}
+
+
+input[type=range] {
+  vertical-align: middle;
+}
+
+
+input[type=checkbox] {
+  display: inline-block;
+  width: 14px;
+}
+
+
+.properties {
+  min-height: 4em;
+  margin-bottom: 1em;
+}
+
+
+.transport {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+button {
+  padding: 0.5em;
+}
+
+
+.values {
+  font-size: 12px;
+  vertical-align: middle;
+  margin-left: 0.5em;
+}
+
+
+.property-range {
+  width: 16em;
+}
+
+
+.tick-container {
+  display: flex;
+  justify-content: center;
+}
+
+.tick-container span:nth-child(1),
+.tick-container span:nth-child(9) {
+  /*border-bottom: 1.5px solid black;*/
+}
+
+.tick-container span:nth-child(5),
+.tick-container span:nth-child(13) {
+  /*
+  border-bottom-style: double;
+  border-bottom-width: 3px;
+  */
+}
+
+.mode-selector {
+  margin-left: 1em;
+  display: inline-block;
+}
+
+.mode-selector span {
+  vertical-align: middle;
+  margin-right: 0.4em;
+}
