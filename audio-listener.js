@@ -2,7 +2,7 @@ var animationFrameRequest;
 
 var lastCursorTickAt = false;
 var lastCursor = 0;
-var context = new AudioContext();
+var context = new (window.AudioContext || window.webkitAudioContext)();
 
 var voltageBuffer = context.createBuffer(1, 2, 44100);
 var data = voltageBuffer.getChannelData(0);
@@ -19,7 +19,7 @@ var audioListener = module.exports = function(component,
   if (state.playing) {
     go(component.props.machine, setCursor, setActivePatternSection);
     animationFrameRequest = requestAnimationFrame(
-      audioListener.bind(null, component, setCursor)
+      audioListener.bind(null, component, setCursor, setActivePatternSection)
     );
   } else {
     cancelAnimationFrame(animationFrameRequest);
@@ -48,6 +48,7 @@ function go(state, setCursor, setActivePatternSection) {
     setCursor(lastCursor);
     scheduleTick(state);
   } else {
+    var newState = Object.assign({}, state);
     if (isTimeForCursorTick(state.tempo, lastCursorTickAt, context.currentTime)) {
       lastCursorTickAt = context.currentTime;
       if (state.patternMode === "AB") {
@@ -58,12 +59,14 @@ function go(state, setCursor, setActivePatternSection) {
             var newSection = 0;
           }
           setActivePatternSection(newSection);
+          newState.activePatternSection = newSection;
         }
       }
       lastCursor += 1;
       lastCursor = lastCursor % 16;
       setCursor(lastCursor);
-      scheduleTick(Object.assign({}, state, { cursor: lastCursor }));
+      newState.cursor = lastCursor;
+      scheduleTick(newState);
     }
   }
 }
@@ -97,6 +100,10 @@ var sources = [
 
 function scheduleTick(state) {
   state.sounds.forEach(function(sound, i) {
+    var accent = state.pattern[0][state.activePatternSection][state.cursor] === 1;
+    if (accent) {
+      var accentValue = state.sounds[0].properties[0].value;
+    }
     if (i === 0) {
       return;
     }
@@ -121,19 +128,17 @@ function scheduleTick(state) {
           node.decay = decay;
           node.tone = tone;
         }
-        /*
-        if (sound.modes[0].name === "Snare Drum") {
-        } else {
-          var obj = {};
-          obj[property.name] = property.value;
-          Object.assign(node, obj);
-        }
-        */
       });
 
       var level = sound.properties.filter(function(property) {
         return property.name === "level";
       })[0].value / 127;
+
+      if (accent) {
+        level *= 1 + (accentValue / 127);
+      }
+
+      //level *= 1 + (accent ? 0.5 : -0.25);
 
       var gainNode = context.createGain();
       gainNode.gain.value = level;

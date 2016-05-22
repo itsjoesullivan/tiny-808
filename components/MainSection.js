@@ -5,11 +5,17 @@ class MainSection extends Component {
   constructor(props, context) {
     super(props, context)
     this.listener = audioListener;
-    this.listener(this, this.setCursor.bind(this), this.setCursor.bind(this), this.setActivePatternSection.bind(this));
+    var thing = this.setActivePatternSection.bind(this);
+    this.listener(this, this.setCursor.bind(this), this.setCursor.bind(this), thing);
+    setInterval(function() {
+      var state = this.props.machine;
+      history.pushState(null, null, '#' + encodeURIComponent(JSON.stringify(state)));
+    }.bind(this), 1000);
   }
 
   componentDidUpdate() {
-    this.listener(this, this.setCursor.bind(this), this.setCursor.bind(this), this.setActivePatternSection.bind(this));
+    var thing = this.setActivePatternSection.bind(this);
+    this.listener(this, this.setCursor.bind(this), thing);
   }
 
   render() {
@@ -177,14 +183,10 @@ class MainSection extends Component {
     this.props.actions.togglePlay();
   }
   handleActiveSoundChange(e) {
-    var start = Date.now();
     this.props.actions.changeActiveSound(parseInt(e.target.value));
-    console.log(Date.now() - start);
   }
   handleActiveSoundChange2(e) {
-    var start = Date.now();
     this.props.actions.changeActiveSound(parseInt(e.target.value));
-    console.log(Date.now() - start);
   }
   handleSoundPropertyChange(propertyIndex, e) {
     this.props.actions.changeSoundProperty(propertyIndex, parseInt(e.target.value));

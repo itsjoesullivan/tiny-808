@@ -301,7 +301,17 @@ const initialState = {
   patternMode: "A"
 }
 
-export default function todos(state = initialState, action) {
+var savedState;
+try {
+  savedState = JSON.parse(decodeURIComponent(document.location.hash.slice(1)));
+  savedState.cursor = 0;
+  savedState.playing = false;
+} catch (e) {
+  // may not fit
+  savedState = false;
+}
+
+export default function todos(state = (savedState || initialState), action) {
   switch (action.type) {
     case CHANGE_TEMPO:
       return Object.assign({}, state, {tempo: action.tempo});
@@ -330,13 +340,20 @@ export default function todos(state = initialState, action) {
       return newState;
       break;
     case CHANGE_PATTERN_MODE:
-      return Object.assign({}, state, { patternMode: action.mode });
+      var newState = Object.assign({}, state, { patternMode: action.mode });
+      if (action.mode === "B") {
+        newState.activePatternSection = 1;
+      } else if (action.mode === "A") {
+        newState.activePatternSection = 0;
+      }
+      return newState;
       break;
     case "SET_CURSOR":
       return Object.assign({}, state, { cursor: action.index });
       break;
     case "SET_ACTIVE_PATTERN_SECTION_INDEX":
-      return Object.assign({}, state, { activePatternSection: action.index });
+      var newState = Object.assign({}, state, { activePatternSection: action.index });
+      return newState;
       break;
     case "CHANGE_SOUND_MODE":
       var newState = Object.assign({}, state);
