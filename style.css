@@ -124,3 +124,10 @@ span {
   font-weight: 700;
 
 }
+
+.quarters div {
+  display: inline-block;
+  width: 23%;
+  margin: 1%;
+  border-bottom: 2px solid black;
+}

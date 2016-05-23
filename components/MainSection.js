@@ -120,6 +120,12 @@ class MainSection extends Component {
             </span>
           }.bind(this))}
         </div>
+        <div className="quarters">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
           <br />
         <label>Tempo:</label>
         <input
