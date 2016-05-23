@@ -26,7 +26,8 @@
     "react-dom": "^0.14.7",
     "react-redux": "^4.2.1",
     "redux": "^3.2.1",
-    "snare": "^2.7.1"
+    "snare": "^2.7.1",
+    "web-audio-ios": "^1.0.2"
   },
   "devDependencies": {
     "babel-core": "^6.3.15",

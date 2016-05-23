@@ -1,5 +1,6 @@
 body {
   font-family: Verdana, Geneva, sans-serif;
+  margin: 0;
 }
 h1 {
   text-align: center;
@@ -17,8 +18,7 @@ h1 {
 
 
 .sounds-range {
-  width: 27em;
-  margin: 2px;
+  width: 27.4em;
 }
 
 
@@ -35,6 +35,10 @@ label {
   margin: auto;
 }
 
+.range-selector-container {
+  text-align: center;
+}
+
 
 input[type=range] {
   vertical-align: middle;
@@ -48,7 +52,7 @@ input[type=checkbox] {
 
 
 .properties {
-  min-height: 4em;
+  min-height: 4.2em;
   margin-bottom: 1em;
 }
 
@@ -60,7 +64,6 @@ input[type=checkbox] {
 
 
 button {
-  padding: 0.5em;
 }
 
 
@@ -107,4 +110,17 @@ button {
 
 span {
   vertical-align: middle;
+}
+.pattern-selector label {
+  width: initial;
+  display: inline-block;
+  min-width: 2em;
+  text-align: right;
+  margin: 0 0.2em;
+  margin-right: 0.1em;
+}
+
+.pattern-selector .active {
+  font-weight: 700;
+
 }

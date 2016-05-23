@@ -1,8 +1,10 @@
-var animationFrameRequest;
 
 var lastCursorTickAt = false;
 var lastCursor = 0;
 var context = new (window.AudioContext || window.webkitAudioContext)();
+
+var wai = require('web-audio-ios');
+wai(document.body, context, function (unlocked) { });
 
 var voltageBuffer = context.createBuffer(1, 2, 44100);
 var data = voltageBuffer.getChannelData(0);
@@ -12,20 +14,28 @@ var voltage = context.createBufferSource();
 voltage.buffer = voltageBuffer;
 voltage.start(0);
 
+var animationFrameRequests = [];
+
 var audioListener = module.exports = function(component,
     setCursor,
     setActivePatternSection) {
+
+  animationFrameRequests.forEach(function(req) {
+    cancelAnimationFrame(req);
+  });
+  animationFrameRequests = [];
+
   var state = component.props.machine;
   if (state.playing) {
     go(component.props.machine, setCursor, setActivePatternSection);
-    animationFrameRequest = requestAnimationFrame(
+    animationFrameRequests.push(requestAnimationFrame(
       audioListener.bind(null, component, setCursor, setActivePatternSection)
-    );
+    ));
   } else {
-    cancelAnimationFrame(animationFrameRequest);
     if (state.cursor !== 0) {
       setCursor(0);
     }
+    lastCursorTickAt = false;
   }
 };
 
@@ -50,7 +60,9 @@ function go(state, setCursor, setActivePatternSection) {
   } else {
     var newState = Object.assign({}, state);
     if (isTimeForCursorTick(state.tempo, lastCursorTickAt, context.currentTime)) {
-      lastCursorTickAt = context.currentTime;
+      var tickLength = 60 / (4 * state.tempo);
+      lastCursorTickAt += tickLength;
+      //lastCursorTickAt = context.currentTime;
       if (state.patternMode === "AB") {
         if (lastCursor === 15) {
           if (state.activePatternSection === 0) {
@@ -103,7 +115,7 @@ function scheduleTick(state) {
     var accent = state.pattern[0][state.activePatternSection][state.cursor] === 1;
     if (accent) {
       var accentValue = state.sounds[0].properties[0].value;
-    }
+1}
     if (i === 0) {
       return;
     }
@@ -138,15 +150,14 @@ function scheduleTick(state) {
         level *= 1 + (accentValue / 127);
       }
 
-      //level *= 1 + (accent ? 0.5 : -0.25);
-
       var gainNode = context.createGain();
       gainNode.gain.value = level;
 
       node.connect(gainNode);
       gainNode.connect(context.destination);
 
-      node.start(lastCursorTickAt + 0.01);
+      node.start(lastCursorTickAt + 0.05);
+
 
     }
   });
