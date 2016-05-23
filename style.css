@@ -83,19 +83,10 @@ button {
   display: flex;
   justify-content: center;
 }
-
-.tick-container span:nth-child(1),
-.tick-container span:nth-child(9) {
-  /*border-bottom: 1.5px solid black;*/
+.tick-container span {
+  width: 21px;
 }
 
-.tick-container span:nth-child(5),
-.tick-container span:nth-child(13) {
-  /*
-  border-bottom-style: double;
-  border-bottom-width: 3px;
-  */
-}
 
 .mode-selector {
   margin-left: 1em;
@@ -129,5 +120,5 @@ span {
   display: inline-block;
   width: 23%;
   margin: 1%;
-  border-bottom: 2px solid black;
+  border-bottom: 3px solid #bbb;
 }

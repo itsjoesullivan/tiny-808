@@ -1,6 +1,4 @@
 NODE_ENV=production
-echo $NODE_ENV
-exit
 webpack -p
 HASH=`cat dist/bundle.js | shasum | awk '{print substr($0,0,5)}'`
 mv dist/bundle.js dist/bundle-$HASH.js
