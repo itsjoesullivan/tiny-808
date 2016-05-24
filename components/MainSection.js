@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import audioListener from './../audio-listener';
 
+import PatternSelector from './pattern-selector';
+
 class MainSection extends Component {
   constructor(props, context) {
     super(props, context)
@@ -87,36 +89,38 @@ class MainSection extends Component {
             Clear
           </button>
         </div>
-        <div className="range-selector-container">
-          {machine.sounds.map(function(sound, i) {
-            return <span key={i} className="range-name">{sound.modes[sound.currentModeIndex].shortName} </span>
-          })}
-          <br />
-          <input
-          className="sounds-range"
-          type="range"
-          min={0}
-          max={machine.sounds.length - 1}
-          value={machine.activeSoundIndex}
-          step={1}
-          onChange={this.handleActiveSoundChange2.bind(this)} />
-        </div>
         <div>
-          <label>Sound:</label>
-          <select
-            value={machine.activeSoundIndex}
-            onChange={this.handleActiveSoundChange.bind(this)}
-          >
+          <div className="range-selector-container">
             {machine.sounds.map(function(sound, i) {
-              return <option
-                value={i}
-                key={i}
-              >
-                {sound.modes[sound.currentModeIndex].name}
-              </option>
-            }.bind(this))}
-          </select>
-          {modeSelector}
+              return <span key={i} className="range-name">{sound.modes[sound.currentModeIndex].shortName} </span>
+            })}
+            <br />
+            <input
+            className="sounds-range"
+            type="range"
+            min={0}
+            max={machine.sounds.length - 1}
+            value={machine.activeSoundIndex}
+            step={1}
+            onChange={this.handleActiveSoundChange2.bind(this)} />
+          </div>
+          <div>
+            <label>Sound:</label>
+            <select
+              value={machine.activeSoundIndex}
+              onChange={this.handleActiveSoundChange.bind(this)}
+            >
+              {machine.sounds.map(function(sound, i) {
+                return <option
+                  value={i}
+                  key={i}
+                >
+                  {sound.modes[sound.currentModeIndex].name}
+                </option>
+              }.bind(this))}
+            </select>
+            {modeSelector}
+          </div>
         </div>
         <br />
         <div className="properties">
@@ -164,16 +168,18 @@ class MainSection extends Component {
           <div></div>
         </div>
           <br />
-        <label>Tempo:</label>
-        <input
-          type="range"
-          className="property-range"
-          value={machine.tempo}
-          min="60"
-          max="200"
-          onChange={this.handleTempoChange.bind(this)}
-        />
-        <span className="values">{machine.tempo} BPM</span>
+        <div>
+          <label>Tempo:</label>
+          <input
+            type="range"
+            className="property-range"
+            value={machine.tempo}
+            min="60"
+            max="200"
+            onChange={this.handleTempoChange.bind(this)}
+          />
+          <span className="values">{machine.tempo} BPM</span>
+        </div>
       <br />
       <br />
       <div className="transport">
@@ -184,43 +190,11 @@ class MainSection extends Component {
             {machine.playing ? "Pause" : "Play"}
           </button>
         </div>
-        <form className="pattern-selector">
-          <label
-            className={machine.activePatternSection === 0 ? "active" : ""}
-          >
-            A
-          <input
-            type="radio"
-            name="pattern-mode"
-            value="A"
-            checked={machine.patternMode === "A"}
-            onChange={this.handlePatternModeChange.bind(this, "A")}
-          />
-          </label>
-          <label
-          >
-            AB
-          <input
-            type="radio"
-            name="pattern-mode"
-            value="AB"
-            checked={machine.patternMode === "AB"}
-            onChange={this.handlePatternModeChange.bind(this, "AB")}
-            />
-          </label>
-          <label
-            className={machine.activePatternSection === 1 ? "active" : ""}
-          >
-            B
-          <input
-            type="radio"
-            name="pattern-mode"
-            value="B"
-            checked={machine.patternMode === "B"}
-            onChange={this.handlePatternModeChange.bind(this, "B")}
-            />
-          </label>
-        </form>
+        <PatternSelector
+          activePatternSection={machine.activePatternSection}
+          patternMode={machine.patternMode}
+          handlePatternModeChange={this.handlePatternModeChange.bind(this)}
+        />
       </div>
       </section>
     )
