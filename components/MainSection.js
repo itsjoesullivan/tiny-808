@@ -5,18 +5,19 @@ class MainSection extends Component {
   constructor(props, context) {
     super(props, context)
     this.listener = audioListener;
-    this.listener(this, this.setCursor.bind(this), this.setActivePatternSection.bind(this), this.getActivePatternSection.bind(this));
-    /*
     this.listener(this,
-        this.setCursor.bind(this),
-        this.setCursor.bind(this),
-        this.setActivePatternSection.bind(this));
-        */
+                  this.setCursor.bind(this),
+                  this.setActivePatternSection.bind(this),
+                  this.getActivePatternSection.bind(this));
+    document.addEventListener("visibilitychange", this.handleVisibilityChange.bind(this), false);
   }
 
 
   componentDidUpdate() {
-    this.listener(this, this.setCursor.bind(this), this.setActivePatternSection.bind(this), this.getActivePatternSection.bind(this));
+    this.listener(this,
+                  this.setCursor.bind(this),
+                  this.setActivePatternSection.bind(this),
+                  this.getActivePatternSection.bind(this));
   }
 
   render() {
@@ -263,6 +264,11 @@ class MainSection extends Component {
   }
   getActivePatternSection() {
     return this.props.machine.activePatternSection;
+  }
+  handleVisibilityChange() {
+    if (this.props.machine.playing && document.hidden) {
+      this.props.actions.togglePlay();
+    }
   }
   
 }
