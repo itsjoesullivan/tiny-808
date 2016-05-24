@@ -330,7 +330,14 @@ export default function todos(state = (savedState || initialState), action) {
       return Object.assign({}, state, {swing: action.swing});
       break;
     case TOGGLE_PLAY:
-      return Object.assign({}, state, {playing: !state.playing});
+      var nowPlaying = !state.playing;
+      var obj = {
+        playing: nowPlaying
+      }
+      if (!nowPlaying && state.patternMode === "AB") {
+        obj.activePatternSection = 0;
+      }
+      return Object.assign({}, state, obj);
       break;
     case CHANGE_ACTIVE_SOUND:
       return Object.assign({}, state, {activeSoundIndex: action.index});
