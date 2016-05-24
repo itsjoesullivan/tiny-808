@@ -80,7 +80,7 @@ class MainSection extends Component {
           <button
             onClick={this.handleResetClick.bind(this)}
           >
-            Reset
+            Clear
           </button>
         </div>
         <div className="range-selector-container">
