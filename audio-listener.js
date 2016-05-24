@@ -121,7 +121,11 @@ function scheduleTick(state) {
     }
     var pattern = state.pattern[i][state.activePatternSection];
     if (pattern[state.cursor] !== 0) {
-      var node = sources[i][sound.currentModeIndex]();
+      var factory = sources[i][sound.currentModeIndex];
+      if (!factory) {
+        return;
+      }
+      var node = factory();
       var name = sound.modes[sound.currentModeIndex].shortName;
       sound.properties.forEach(function(property) {
         if (/^sd$/i.test(name)) {

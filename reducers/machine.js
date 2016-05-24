@@ -111,7 +111,7 @@ const initialState = {
       properties: [
         {
           name: "level",
-          value: 100
+          value: 64
         },
         {
           name: "tone",
@@ -226,7 +226,7 @@ const initialState = {
       properties: [
         {
           name: "level",
-          value: 100
+          value: 64
         }
       ]
     },
@@ -309,6 +309,8 @@ const initialState = {
   patternMode: "A"
 }
 
+var resetState = JSON.parse(JSON.stringify(initialState));
+
 var savedState;
 try {
   savedState = JSON.parse(decodeURIComponent(document.location.hash.slice(1)));
@@ -369,6 +371,8 @@ export default function todos(state = (savedState || initialState), action) {
       currentSound.currentModeIndex = action.index;
       return newState;
       break;
+    case "RESET":
+      return JSON.parse(JSON.stringify(resetState));
     default:
       return state;
       break;

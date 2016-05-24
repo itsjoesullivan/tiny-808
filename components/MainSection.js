@@ -50,6 +50,33 @@ class MainSection extends Component {
     return (
       <section className="main">
         <h1>tiny-808</h1>
+        <div className="sub-header-actions">
+          <button
+            onClick={function() {
+              var state = this.props.machine;
+              history.pushState(null, null, '#' + encodeURIComponent(JSON.stringify(state)));
+            }.bind(this)}
+          >Save
+          </button>
+          <button
+            onClick={function() {
+              var state = this.props.machine;
+              var url = document.location.protocol + "//" +
+                document.location.host + document.location.pathname +
+                "#" + encodeURIComponent(JSON.stringify(state));
+              url = encodeURIComponent(url);
+              window.open("http://tinyurl.com/api-create.php?url=" + url,
+                          "_blank",
+                          "width=300,height=100");
+            }.bind(this)}
+          >Get link
+          </button>
+          <button
+            onClick={this.handleResetClick.bind(this)}
+          >
+            Reset
+          </button>
+        </div>
         <div className="range-selector-container">
           {machine.sounds.map(function(sound, i) {
             return <span key={i} className="range-name">{sound.modes[sound.currentModeIndex].shortName} </span>
@@ -146,13 +173,6 @@ class MainSection extends Component {
           >
             {machine.playing ? "Pause" : "Play"}
           </button>
-          <button
-            onClick={function() {
-              var state = this.props.machine;
-              history.pushState(null, null, '#' + encodeURIComponent(JSON.stringify(state)));
-            }.bind(this)}
-          >Save
-          </button>
         </div>
         <form className="pattern-selector">
           <label
@@ -207,6 +227,9 @@ class MainSection extends Component {
   }
   handlePlayClick() {
     this.props.actions.togglePlay();
+  }
+  handleResetClick() {
+    this.props.actions.reset();
   }
   handleActiveSoundChange(e) {
     this.props.actions.changeActiveSound(parseInt(e.target.value));

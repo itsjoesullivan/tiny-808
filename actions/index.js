@@ -38,3 +38,7 @@ export function setActivePatternSectionIndex(index) {
 export function changeSoundMode(index) {
   return { type: "CHANGE_SOUND_MODE", index }
 }
+
+export function reset() {
+  return { type: "RESET" }
+}
