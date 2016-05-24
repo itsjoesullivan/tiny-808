@@ -358,15 +358,33 @@ export default function todos(state = (savedState || initialState), action) {
       break;
     case CHANGE_PATTERN_MODE:
       var newState = Object.assign({}, state, { patternMode: action.mode });
-      if (action.mode === "B") {
-        newState.activePatternSection = 1;
-      } else if (action.mode === "A") {
-        newState.activePatternSection = 0;
+      if (newState.playing) {
+        if (action.mode === "B" && newState.activePatternSection !== 1) {
+          newState.targetPatternSection = 1;
+        } else if (action.mode === "A" && newState.activePatternSection !== 0) {
+          newState.targetPatternSection = 0;
+        }
+      } else {
+        if (action.mode === "B") {
+          newState.activePatternSection = 1;
+        } else if (action.mode === "A") {
+          newState.activePatternSection = 0;
+        }
       }
       return newState;
       break;
     case "SET_CURSOR":
-      return Object.assign({}, state, { cursor: action.index });
+      var newState = Object.assign({}, state, { cursor: action.index });
+      if (action.index === 15) {
+        if (typeof state.targetPatternSection === 'number') {
+          if (state.patternMode !== "AB") {
+            console.log ('making the adjustment');
+            newState.activePatternSection = state.targetPatternSection;
+          }
+          delete newState.targetPatternSection;
+        }
+      }
+      return newState;
       break;
     case "SET_ACTIVE_PATTERN_SECTION_INDEX":
       var newState = Object.assign({}, state, { activePatternSection: action.index });

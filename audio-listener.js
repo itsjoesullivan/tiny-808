@@ -32,15 +32,6 @@ if (window.webkitAudioContext || /iphone|ipad/i.test(navigator.userAgent)) {
 
 }
 
-
-var voltageBuffer = context.createBuffer(1, 2, 44100);
-var data = voltageBuffer.getChannelData(0);
-data[0] = 1;
-data[1] = 1;
-var voltage = context.createBufferSource();
-voltage.buffer = voltageBuffer;
-voltage.start(0);
-
 var animationFrameRequests = [];
 
 var audioListener = module.exports = throttle(function(component,
@@ -54,7 +45,7 @@ var audioListener = module.exports = throttle(function(component,
 
   var state = component.props.machine;
   if (state.playing) {
-    go(component.props.machine, setCursor, setActivePatternSection);
+    go(component.props.machine, setCursor, setActivePatternSection, component.props);
     animationFrameRequests.push(requestAnimationFrame(
       audioListener.bind(null, component, setCursor, setActivePatternSection)
     ));
@@ -78,7 +69,7 @@ function isTimeForCursorTick(tempo, lastCursorTickAt, currentTime) {
   }
 }
 
-function go(state, setCursor, setActivePatternSection) {
+function go(state, setCursor, setActivePatternSection, props) {
   if (!lastCursorTickAt) {
     lastCursor = 0;
     lastCursorTickAt = context.currentTime;
@@ -89,7 +80,6 @@ function go(state, setCursor, setActivePatternSection) {
     if (isTimeForCursorTick(state.tempo, lastCursorTickAt, context.currentTime)) {
       var tickLength = 60 / (4 * state.tempo);
       lastCursorTickAt += tickLength;
-      //lastCursorTickAt = context.currentTime;
       if (state.patternMode === "AB") {
         if (lastCursor === 15) {
           if (state.activePatternSection === 0) {
