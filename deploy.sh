@@ -5,3 +5,4 @@ cp index.html dist/index.html
 sed -i -e "s/\/static\/bundle\.js/http\:\/\/dyclrq6t27il\.cloudfront\.net\/bundle-$HASH\.js/g" dist/index.html
 rm dist/index.html-e
 s3cmd sync dist/ s3://tiny-808.com
+s3cmd modify s3://tiny-808.com/bundle-$HASH.js --add-header=Cache-Control:max-age=315360000

@@ -14,3 +14,10 @@ render(
   </Provider>,
   document.getElementById('root')
 )
+
+
+setTimeout(function() {
+  var script = document.createElement('script');
+  script.innerHTML = document.getElementById('ga').innerHTML;
+  document.body.appendChild(script);
+}, 1000);
