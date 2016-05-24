@@ -3,8 +3,10 @@ var lastCursorTickAt = false;
 var lastCursor = 0;
 var context = new (window.AudioContext || window.webkitAudioContext)();
 
-var wai = require('web-audio-ios');
-wai(document.body, context, function (unlocked) { });
+if (/iphone|ipad/i.test(navigator.userAgent)) {
+  var wai = require('web-audio-ios');
+  wai(document.body, context, function (unlocked) { });
+}
 
 var voltageBuffer = context.createBuffer(1, 2, 44100);
 var data = voltageBuffer.getChannelData(0);

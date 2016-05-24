@@ -47,9 +47,15 @@ class MainSection extends Component {
       </form>)
     }
 
+    var warning = '';
+    if (/Firefox/.test(navigator.userAgent)) {
+      warning = <p><i>For Firefox users: some of the drum synths, including the kick, aren't working very well. Hopefully I can improve this situation soon. - Joe</i></p>
+    }
+
     return (
       <section className="main">
         <h1>tiny-808</h1>
+        {warning}
         <div className="sub-header-actions">
           <button
             onClick={function() {
