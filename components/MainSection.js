@@ -53,7 +53,7 @@ class MainSection extends Component {
 
     var warning = '';
     if (/Firefox/.test(navigator.userAgent)) {
-      warning = <p><i>For Firefox users: some of the drum synths, including the kick, aren't working very well. Hopefully I can improve this situation soon. Until then the sound is muted. - Joe</i></p>
+      warning = <p><i>For Firefox users: some of the drum synths, including the kick, aren't working very well. Hopefully I can improve this situation soon. Until then the sound is muted to avoid damaging your speakers or ears. - Joe</i></p>
     }
 
     return (
