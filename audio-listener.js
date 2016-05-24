@@ -4,10 +4,32 @@ var lastCursorTickAt = false;
 var lastCursor = 0;
 var context = new (window.AudioContext || window.webkitAudioContext)();
 
-if (/iphone|ipad/i.test(navigator.userAgent)) {
+window.context = context;
+
+if (window.webkitAudioContext || /iphone|ipad/i.test(navigator.userAgent)) {
   var wai = require('web-audio-ios');
   wai(document.body, context, function (unlocked) { });
+
+
+  // context state at this time is `undefined` in iOS8 Safari
+  if (context.state === 'suspended') {
+    var resume = function () {
+      context.resume();
+
+      setTimeout(function () {
+        if (context.state === 'running') {
+          document.body.removeEventListener('touchend', resume, false);
+          document.body.removeEventListener('click', resume, false);
+        }
+      }, 0);
+    };
+
+    document.body.addEventListener('touchend', resume, false);
+    document.body.addEventListener('click', resume, false);
+  }
+
 }
+
 
 var voltageBuffer = context.createBuffer(1, 2, 44100);
 var data = voltageBuffer.getChannelData(0);
@@ -22,6 +44,7 @@ var animationFrameRequests = [];
 var audioListener = module.exports = throttle(function(component,
     setCursor,
     setActivePatternSection) {
+  console.log(context.currentTime);
 
   animationFrameRequests.forEach(function(req) {
     cancelAnimationFrame(req);
