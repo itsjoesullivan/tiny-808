@@ -6,6 +6,8 @@ var context = new (window.AudioContext || window.webkitAudioContext)();
 
 window.context = context;
 
+var isFirefox = /Firefox/.test(navigator.userAgent);
+
 if (window.webkitAudioContext || /iphone|ipad/i.test(navigator.userAgent)) {
   var wai = require('web-audio-ios');
   wai(document.body, context, function (unlocked) { });
@@ -44,7 +46,6 @@ var animationFrameRequests = [];
 var audioListener = module.exports = throttle(function(component,
     setCursor,
     setActivePatternSection) {
-  console.log(context.currentTime);
 
   animationFrameRequests.forEach(function(req) {
     cancelAnimationFrame(req);
@@ -138,6 +139,9 @@ var sources = [
 
 function scheduleTick(state) {
   state.sounds.forEach(function(sound, i) {
+    if (isFirefox) {
+      return;
+    }
     var accent = state.pattern[0][state.activePatternSection][state.cursor] === 1;
     if (accent) {
       var accentValue = state.sounds[0].properties[0].value;
@@ -151,8 +155,8 @@ function scheduleTick(state) {
       if (!factory) {
         return;
       }
-      var node = factory();
       var name = sound.modes[sound.currentModeIndex].shortName;
+      var node = factory();
       sound.properties.forEach(function(property) {
         if (/^sd$/i.test(name)) {
           if (property.name !== "level" && node[property.name] instanceof window.AudioParam) {
