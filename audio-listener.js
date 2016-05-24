@@ -4,6 +4,44 @@ var lastCursorTickAt = false;
 var lastCursor = 0;
 var context = new (window.AudioContext || window.webkitAudioContext)();
 
+var compressor = context.createDynamicsCompressor();
+compressor.connect(context.destination);
+compressor.ratio.value = 6;
+compressor.threshold.value = -20;
+compressor.attack.value = 0.003;
+compressor.release.value = 0.1;
+
+var convolver = context.createConvolver();
+
+convolver.connect(context.destination);
+
+var filter = context.createBiquadFilter();
+filter.type = 'highpass';
+filter.frequency.value = 300;
+
+var wet = context.createGain();
+wet.connect(filter);
+filter.connect(convolver);
+wet.gain.value = 0.03;
+wet.connect(convolver);
+
+
+compressor.connect(wet);
+
+var ajaxRequest = new XMLHttpRequest();
+ajaxRequest.open('GET', 'http://tiny-808.com/bright.mp3', true);
+ajaxRequest.responseType = 'arraybuffer';
+
+ajaxRequest.onload = function() {
+  var audioData = ajaxRequest.response;
+  context.decodeAudioData(audioData, function(buffer) {
+    convolver.buffer = buffer;
+  }, function(e){"Error with decoding audio data" + e.err});
+}
+
+ajaxRequest.send();
+
+
 window.context = context;
 
 var isFirefox = /Firefox/.test(navigator.userAgent);
@@ -179,7 +217,8 @@ function scheduleTick(state) {
       gainNode.gain.value = level;
 
       node.connect(gainNode);
-      gainNode.connect(context.destination);
+      //gainNode.connect(context.destination);
+      gainNode.connect(compressor);
 
       node.start(lastCursorTickAt + 0.05);
 
