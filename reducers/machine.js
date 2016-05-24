@@ -375,10 +375,9 @@ export default function todos(state = (savedState || initialState), action) {
       break;
     case "SET_CURSOR":
       var newState = Object.assign({}, state, { cursor: action.index });
-      if (action.index === 15) {
+      if (action.index === 0) {
         if (typeof state.targetPatternSection === 'number') {
           if (state.patternMode !== "AB") {
-            console.log ('making the adjustment');
             newState.activePatternSection = state.targetPatternSection;
           }
           delete newState.targetPatternSection;

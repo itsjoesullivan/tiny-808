@@ -5,15 +5,18 @@ class MainSection extends Component {
   constructor(props, context) {
     super(props, context)
     this.listener = audioListener;
+    this.listener(this, this.setCursor.bind(this), this.setActivePatternSection.bind(this), this.getActivePatternSection.bind(this));
+    /*
     this.listener(this,
         this.setCursor.bind(this),
         this.setCursor.bind(this),
         this.setActivePatternSection.bind(this));
+        */
   }
 
 
   componentDidUpdate() {
-    this.listener(this, this.setCursor.bind(this), this.setActivePatternSection.bind(this));
+    this.listener(this, this.setCursor.bind(this), this.setActivePatternSection.bind(this), this.getActivePatternSection.bind(this));
   }
 
   render() {
@@ -257,6 +260,9 @@ class MainSection extends Component {
   }
   setActivePatternSection(index) {
     this.props.actions.setActivePatternSectionIndex(index);
+  }
+  getActivePatternSection() {
+    return this.props.machine.activePatternSection;
   }
   
 }

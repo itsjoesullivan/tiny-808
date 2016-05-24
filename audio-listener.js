@@ -36,7 +36,7 @@ var animationFrameRequests = [];
 
 var audioListener = module.exports = throttle(function(component,
     setCursor,
-    setActivePatternSection) {
+    setActivePatternSection, getActivePatternSection) {
 
   animationFrameRequests.forEach(function(req) {
     cancelAnimationFrame(req);
@@ -45,9 +45,9 @@ var audioListener = module.exports = throttle(function(component,
 
   var state = component.props.machine;
   if (state.playing) {
-    go(component.props.machine, setCursor, setActivePatternSection, component.props);
+    go(component.props.machine, setCursor, setActivePatternSection, getActivePatternSection);
     animationFrameRequests.push(requestAnimationFrame(
-      audioListener.bind(null, component, setCursor, setActivePatternSection)
+      audioListener.bind(null, component, setCursor, setActivePatternSection, getActivePatternSection)
     ));
   } else {
     if (state.cursor !== 0) {
@@ -69,7 +69,7 @@ function isTimeForCursorTick(tempo, lastCursorTickAt, currentTime) {
   }
 }
 
-function go(state, setCursor, setActivePatternSection, props) {
+function go(state, setCursor, setActivePatternSection, getActivePatternSection) {
   if (!lastCursorTickAt) {
     lastCursor = 0;
     lastCursorTickAt = context.currentTime;
@@ -95,6 +95,7 @@ function go(state, setCursor, setActivePatternSection, props) {
       lastCursor = lastCursor % 16;
       setCursor(lastCursor);
       newState.cursor = lastCursor;
+      newState.activePatternSection = getActivePatternSection();
       scheduleTick(newState);
     }
   }
