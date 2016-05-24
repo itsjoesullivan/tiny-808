@@ -1,5 +1,4 @@
-NODE_ENV=production
-webpack -p
+NODE_ENV=production webpack -p --config webpack.production.config.js
 HASH=`cat dist/bundle.js | shasum | awk '{print substr($0,0,5)}'`
 mv dist/bundle.js dist/bundle-$HASH.js
 cp index.html dist/index.html

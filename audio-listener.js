@@ -8,7 +8,7 @@ window.context = context;
 
 var isFirefox = /Firefox/.test(navigator.userAgent);
 
-if (window.webkitAudioContext || /iphone|ipad/i.test(navigator.userAgent)) {
+if (!window.AudioContext || /iphone|ipad/i.test(navigator.userAgent)) {
   var wai = require('web-audio-ios');
   wai(document.body, context, function (unlocked) { });
 

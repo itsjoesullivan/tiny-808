@@ -325,10 +325,8 @@ export default function todos(state = (savedState || initialState), action) {
   switch (action.type) {
     case CHANGE_TEMPO:
       return Object.assign({}, state, {tempo: action.tempo});
-      break;
     case CHANGE_SWING:
       return Object.assign({}, state, {swing: action.swing});
-      break;
     case TOGGLE_PLAY:
       var nowPlaying = !state.playing;
       var obj = {
@@ -338,13 +336,12 @@ export default function todos(state = (savedState || initialState), action) {
         obj.activePatternSection = 0;
       }
       return Object.assign({}, state, obj);
-      break;
     case CHANGE_ACTIVE_SOUND:
       return Object.assign({}, state, {activeSoundIndex: action.index});
-      break;
     case CHANGE_SOUND_PROPERTY:
       var newState = Object.assign({}, state);
       newState.sounds[newState.activeSoundIndex].properties[action.propertyIndex].value = action.value;
+      return newState;
     case PATTERN_CHANGE:
       var newState = Object.assign({}, state);
 
@@ -355,7 +352,6 @@ export default function todos(state = (savedState || initialState), action) {
         pattern[action.index] = 0;
       }
       return newState;
-      break;
     case CHANGE_PATTERN_MODE:
       var newState = Object.assign({}, state, { patternMode: action.mode });
       if (newState.playing) {
@@ -372,7 +368,6 @@ export default function todos(state = (savedState || initialState), action) {
         }
       }
       return newState;
-      break;
     case "SET_CURSOR":
       var newState = Object.assign({}, state, { cursor: action.index });
       if (action.index === 0) {
@@ -384,21 +379,17 @@ export default function todos(state = (savedState || initialState), action) {
         }
       }
       return newState;
-      break;
     case "SET_ACTIVE_PATTERN_SECTION_INDEX":
       var newState = Object.assign({}, state, { activePatternSection: action.index });
       return newState;
-      break;
     case "CHANGE_SOUND_MODE":
       var newState = Object.assign({}, state);
       var currentSound = newState.sounds[newState.activeSoundIndex];
       currentSound.currentModeIndex = action.index;
       return newState;
-      break;
     case "RESET":
       return JSON.parse(JSON.stringify(resetState));
     default:
       return state;
-      break;
   }
 }
