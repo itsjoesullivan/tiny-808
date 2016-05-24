@@ -1,4 +1,5 @@
 
+var throttle = require('lodash/throttle')
 var lastCursorTickAt = false;
 var lastCursor = 0;
 var context = new (window.AudioContext || window.webkitAudioContext)();
@@ -18,7 +19,7 @@ voltage.start(0);
 
 var animationFrameRequests = [];
 
-var audioListener = module.exports = function(component,
+var audioListener = module.exports = throttle(function(component,
     setCursor,
     setActivePatternSection) {
 
@@ -39,7 +40,7 @@ var audioListener = module.exports = function(component,
     }
     lastCursorTickAt = false;
   }
-};
+}, 10);
 
 
 //var startedAt = false;
