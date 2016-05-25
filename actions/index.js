@@ -54,3 +54,15 @@ export function pastePattern(index) {
 export function clearPattern(index) {
   return { type: "CLEAR_PATTERN", index }
 }
+
+export function copyInstrumentPattern(index) {
+  return { type: "COPY_INSTRUMENT_PATTERN", index }
+}
+
+export function pasteInstrumentPattern(index) {
+  return { type: "PASTE_INSTRUMENT_PATTERN_TO_TARGET", index }
+}
+
+export function clearInstrumentPattern(index) {
+  return { type: "CLEAR_INSTRUMENT_PATTERN", index }
+}

@@ -411,6 +411,24 @@ export default function todos(state = (savedState || initialState), action) {
         instrumentsPatterns[action.index] = instrumentsPatterns[action.index].map(function() { return 0; });
       });
 
+    case "COPY_INSTRUMENT_PATTERN":
+      var newState = Object.assign({}, state);
+      newState.copiedInstrumentPattern = state.pattern[state.activeSoundIndex][action.index];
+      newState.copiedInstrumentPattern = JSON.parse(JSON.stringify(newState.copiedInstrumentPattern));
+      return newState;
+    case "PASTE_INSTRUMENT_PATTERN_TO_TARGET":
+      var newState = Object.assign({}, state);
+      if (newState.copiedInstrumentPattern) {
+        newState.pattern[state.activeSoundIndex][action.index] = newState.copiedInstrumentPattern;
+      }
+      return newState;
+    case "CLEAR_INSTRUMENT_PATTERN":
+      var newState = Object.assign({}, state);
+      var toChange = newState.pattern[state.activeSoundIndex][action.index];
+      newState.pattern[state.activeSoundIndex][action.index] = toChange.map(function() {
+        return 0;
+      });
+      return newState;
     default:
       return state;
   }

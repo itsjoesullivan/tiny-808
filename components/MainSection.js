@@ -106,6 +106,9 @@ class MainSection extends Component {
           copyPattern={this.props.actions.copyPattern.bind(this)}
           pastePattern={this.props.actions.pastePattern.bind(this)}
           clearPattern={this.props.actions.clearPattern.bind(this)}
+          copyInstrumentPattern={this.props.actions.copyInstrumentPattern.bind(this)}
+          pasteInstrumentPattern={this.props.actions.pasteInstrumentPattern.bind(this)}
+          clearInstrumentPattern={this.props.actions.clearInstrumentPattern.bind(this)}
         />
       </div>
       </section>
