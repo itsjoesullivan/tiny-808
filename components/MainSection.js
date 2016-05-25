@@ -103,6 +103,9 @@ class MainSection extends Component {
           activePatternSection={machine.activePatternSection}
           patternMode={machine.patternMode}
           handlePatternModeChange={this.handlePatternModeChange.bind(this)}
+          copyPattern={this.props.actions.copyPattern.bind(this)}
+          pastePattern={this.props.actions.pastePattern.bind(this)}
+          clearPattern={this.props.actions.clearPattern.bind(this)}
         />
       </div>
       </section>

@@ -389,6 +389,28 @@ export default function todos(state = (savedState || initialState), action) {
       return newState;
     case "RESET":
       return JSON.parse(JSON.stringify(resetState));
+    case "COPY_PATTERN":
+      var newState = Object.assign({}, state);
+      newState.copiedPattern = state.pattern.map(function(soundPatternSections) {
+        return soundPatternSections[action.index];
+      });
+      newState.copiedPattern = JSON.parse(JSON.stringify(newState.copiedPattern));
+      return newState;
+    case "PASTE_PATTERN_TO_TARGET":
+      var newState = Object.assign({}, state);
+      if (newState.copiedPattern) {
+        newState.pattern.forEach(function(instrumentsPatterns, i) {
+          instrumentsPatterns[action.index] = newState.copiedPattern[i];
+        });
+
+      }
+      return newState;
+    case "CLEAR_PATTERN":
+      var newState = Object.assign({}, state);
+      newState.pattern.forEach(function(instrumentsPatterns, i) {
+        instrumentsPatterns[action.index] = instrumentsPatterns[action.index].map(function() { return 0; });
+      });
+
     default:
       return state;
   }

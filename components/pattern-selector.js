@@ -19,6 +19,7 @@ class PatternSelector extends Component {
         value="A"
         checked={patternMode === "A"}
         onChange={handlePatternModeChange.bind(null, "A")}
+        onKeyDown={this.handleKeyDown.bind(this, 0)}
       />
       </label>
       <label
@@ -42,9 +43,26 @@ class PatternSelector extends Component {
         value="B"
         checked={patternMode === "B"}
         onChange={handlePatternModeChange.bind(null, "B")}
+        onKeyDown={this.handleKeyDown.bind(this, 1)}
         />
       </label>
     </form>
+  }
+  handleKeyDown(index, e) {
+    if (e.metaKey || e.ctrlKey) {
+      switch (e.which) {
+        case 67:
+          this.props.copyPattern(index);
+          break;
+        case 86:
+          this.props.pastePattern(index);
+          break;
+        case 88:
+          this.props.copyPattern(index);
+          this.props.clearPattern(index);
+          break;
+      }
+    }
   }
 }
 

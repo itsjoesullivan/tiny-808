@@ -42,3 +42,15 @@ export function changeSoundMode(index) {
 export function reset() {
   return { type: "RESET" }
 }
+
+export function copyPattern(index) {
+  return { type: "COPY_PATTERN", index }
+}
+
+export function pastePattern(index) {
+  return { type: "PASTE_PATTERN_TO_TARGET", index }
+}
+
+export function clearPattern(index) {
+  return { type: "CLEAR_PATTERN", index }
+}
