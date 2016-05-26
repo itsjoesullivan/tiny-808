@@ -433,6 +433,9 @@ export default function todos(state = (savedState || initialState), action) {
       var newState = Object.assign({}, state);
       var index = false;
       switch (action.which) {
+        case 81: // q
+          index = 0;
+          break;
         case 65: // a
           index = 1;
           break;
@@ -474,14 +477,17 @@ export default function todos(state = (savedState || initialState), action) {
           break;
       }
       if (typeof index === 'number') {
-        var currentVal = newState.pattern[index][state.activePatternSection][state.cursor];
-        var newVal;
-        if (currentVal === 1) {
-          newVal = 0;
-        } else {
-          newVal = 1;
+        if (newState.playing) {
+          var currentVal = newState.pattern[index][state.activePatternSection][state.cursor];
+          var newVal;
+          if (currentVal === 1) {
+            newVal = 0;
+          } else {
+            newVal = 1;
+          }
+          newState.pattern[index][state.activePatternSection][state.cursor] = newVal;
         }
-        newState.pattern[index][state.activePatternSection][state.cursor] = newVal;
+        newState.activeSoundIndex = index;
       }
       return newState;
       break;
