@@ -18,6 +18,9 @@ class MainSection extends Component {
     document.addEventListener("visibilitychange",
                               this.handleVisibilityChange.bind(this),
                               false);
+    document.addEventListener('keydown', function(e) {
+      this.props.actions.handleGeneralKeyDown(e);
+    }.bind(this));
   }
 
 

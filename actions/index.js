@@ -66,3 +66,14 @@ export function pasteInstrumentPattern(index) {
 export function clearInstrumentPattern(index) {
   return { type: "CLEAR_INSTRUMENT_PATTERN", index }
 }
+
+export function handleGeneralKeyDown(e) {
+  var target = e.target;
+  if (/(input|button|select|option)/i.test(target.tagName)) {
+    return { type: ''};
+  } else if (e.metaKey || e.shiftKey || e.ctrlKey) {
+    return { type: ''};
+  } else {
+    return { type: 'GENERAL_KEYDOWN', which: e.which };
+  }
+};

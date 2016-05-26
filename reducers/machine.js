@@ -429,6 +429,62 @@ export default function todos(state = (savedState || initialState), action) {
         return 0;
       });
       return newState;
+    case 'GENERAL_KEYDOWN':
+      var newState = Object.assign({}, state);
+      var index = false;
+      switch (action.which) {
+        case 65: // a
+          index = 1;
+          break;
+        case 87: // w
+          index = 6;
+          break;
+        case 83: // s
+          index = 2;
+          break;
+        case 69: // e
+          index = 7;
+          break;
+        case 68: // d
+          index = 2;
+          break;
+        case 70: // f
+          index = 3;
+          break;
+        case 71: // d
+          index = 4;
+          break;
+        case 72: // d
+          index = 5;
+          break;
+        case 84: // t
+          index = 11;
+          break;
+        case 85: // u
+          index = 10;
+          break;
+        case 79: // o
+          index = 9;
+          break;
+        case 80: // p
+          index = 9;
+          break;
+        case 82: // r
+          index = 8;
+          break;
+      }
+      if (typeof index === 'number') {
+        var currentVal = newState.pattern[index][state.activePatternSection][state.cursor];
+        var newVal;
+        if (currentVal === 1) {
+          newVal = 0;
+        } else {
+          newVal = 1;
+        }
+        newState.pattern[index][state.activePatternSection][state.cursor] = newVal;
+      }
+      return newState;
+      break;
     default:
       return state;
   }
