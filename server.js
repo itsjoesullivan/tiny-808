@@ -13,6 +13,9 @@ app.use(webpackHotMiddleware(compiler))
 app.get("/", function(req, res) {
   res.sendFile(__dirname + '/index.html')
 })
+app.get("/bright.mp3", function(req, res) {
+  res.sendFile(__dirname + '/bright.mp3')
+})
 
 app.listen(port, function(error) {
   if (error) {

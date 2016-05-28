@@ -1,8 +1,8 @@
-
 var throttle = require('lodash/throttle')
 var lastCursorTickAt = false;
 var lastCursor = 0;
 var context = new (window.AudioContext || window.webkitAudioContext)();
+
 
 var compressor = context.createDynamicsCompressor();
 compressor.connect(context.destination);
@@ -11,9 +11,23 @@ compressor.threshold.value = -20;
 compressor.attack.value = 0.003;
 compressor.release.value = 0.1;
 
+
 var convolver = context.createConvolver();
+var ajaxRequest = new XMLHttpRequest();
+ajaxRequest.open('GET', '/bright.mp3', true);
+ajaxRequest.responseType = 'arraybuffer';
+
+ajaxRequest.onload = function() {
+  var audioData = ajaxRequest.response;
+  context.decodeAudioData(audioData, function(buffer) {
+    convolver.buffer = buffer;
+  }, function(e){"Error with decoding audio data" + e.err});
+}
+
+ajaxRequest.send();
 
 convolver.connect(context.destination);
+
 
 var filter = context.createBiquadFilter();
 filter.type = 'highpass';
@@ -28,18 +42,7 @@ wet.connect(convolver);
 
 compressor.connect(wet);
 
-var ajaxRequest = new XMLHttpRequest();
-ajaxRequest.open('GET', 'http://tiny-808.com/bright.mp3', true);
-ajaxRequest.responseType = 'arraybuffer';
 
-ajaxRequest.onload = function() {
-  var audioData = ajaxRequest.response;
-  context.decodeAudioData(audioData, function(buffer) {
-    convolver.buffer = buffer;
-  }, function(e){"Error with decoding audio data" + e.err});
-}
-
-ajaxRequest.send();
 
 
 window.context = context;
