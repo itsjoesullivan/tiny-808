@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import MainSection from '../components/MainSection'
+import MainSection from '../components/main-section'
 import * as MachineActions from '../actions'
 
 class App extends Component {
