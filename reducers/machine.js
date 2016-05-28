@@ -1,13 +1,3 @@
-import {
-  CHANGE_PATTERN_MODE,
-  CHANGE_SOUND_PROPERTY,
-  CHANGE_ACTIVE_SOUND,
-  TOGGLE_PLAY,
-  CHANGE_TEMPO,
-  CHANGE_SWING,
-  PATTERN_CHANGE 
-} from '../constants/ActionTypes'
-
 const initialState = {
   tempo: 120,
   swing: 0,
@@ -323,11 +313,11 @@ try {
 
 export default function todos(state = (savedState || initialState), action) {
   switch (action.type) {
-    case CHANGE_TEMPO:
+    case "CHANGE_TEMPO":
       return Object.assign({}, state, {tempo: action.tempo});
-    case CHANGE_SWING:
+    case "CHANGE_SWING":
       return Object.assign({}, state, {swing: action.swing});
-    case TOGGLE_PLAY:
+    case "TOGGLE_PLAY":
       var nowPlaying = !state.playing;
       var obj = {
         playing: nowPlaying
@@ -336,13 +326,13 @@ export default function todos(state = (savedState || initialState), action) {
         obj.activePatternSection = 0;
       }
       return Object.assign({}, state, obj);
-    case CHANGE_ACTIVE_SOUND:
+    case "CHANGE_ACTIVE_SOUND":
       return Object.assign({}, state, {activeSoundIndex: action.index});
-    case CHANGE_SOUND_PROPERTY:
+    case "CHANGE_SOUND_PROPERTY":
       var newState = Object.assign({}, state);
       newState.sounds[newState.activeSoundIndex].properties[action.propertyIndex].value = action.value;
       return newState;
-    case PATTERN_CHANGE:
+    case "PATTERN_CHANGE":
       var newState = Object.assign({}, state);
 
       var pattern = newState.pattern[newState.activeSoundIndex][newState.activePatternSection];
@@ -352,7 +342,7 @@ export default function todos(state = (savedState || initialState), action) {
         pattern[action.index] = 0;
       }
       return newState;
-    case CHANGE_PATTERN_MODE:
+    case "CHANGE_PATTERN_MODE":
       var newState = Object.assign({}, state, { patternMode: action.mode });
       if (newState.playing) {
         if (action.mode === "B" && newState.activePatternSection !== 1) {
