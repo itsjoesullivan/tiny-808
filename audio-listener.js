@@ -13,6 +13,7 @@ compressor.release.value = 0.1;
 
 
 var convolver = context.createConvolver();
+/*
 var ajaxRequest = new XMLHttpRequest();
 ajaxRequest.open('GET', '/bright.mp3', true);
 ajaxRequest.responseType = 'arraybuffer';
@@ -25,6 +26,7 @@ ajaxRequest.onload = function() {
 }
 
 ajaxRequest.send();
+*/
 
 convolver.connect(context.destination);
 
@@ -34,10 +36,10 @@ filter.type = 'highpass';
 filter.frequency.value = 300;
 
 var wet = context.createGain();
-wet.connect(filter);
-filter.connect(convolver);
+//wet.connect(filter);
+//filter.connect(convolver);
 wet.gain.value = 0.03;
-wet.connect(convolver);
+//wet.connect(convolver);
 
 
 compressor.connect(wet);
