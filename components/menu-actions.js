@@ -7,19 +7,17 @@ class MenuActions extends Component {
       handleGetLinkClick,
       handleClearClick
     } = this.props;
-    /*
+
+    return <div className="sub-header-actions">
       <button
         onClick={handleSaveClick}
       >
         Save
       </button>
-       */
-
-    return <div className="sub-header-actions">
       <button
         onClick={handleGetLinkClick}
       >
-        Get a link to your rhythm
+        Get link
       </button>
       <button
         onClick={handleClearClick}
