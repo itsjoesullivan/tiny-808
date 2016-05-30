@@ -12,12 +12,12 @@ class MenuActions extends Component {
       <button
         onClick={handleSaveClick}
       >
-        Save
+        Save to url
       </button>
       <button
         onClick={handleGetLinkClick}
       >
-        Get link
+        Get shortlink
       </button>
       <button
         onClick={handleClearClick}
