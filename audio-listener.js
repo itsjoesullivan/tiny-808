@@ -4,15 +4,12 @@ var lastCursor = 0;
 var context = new (window.AudioContext || window.webkitAudioContext)();
 
 
-var compressor = context.createGain();
-/*
 var compressor = context.createDynamicsCompressor();
+compressor.connect(context.destination);
 compressor.ratio.value = 6;
 compressor.threshold.value = -20;
 compressor.attack.value = 0.003;
 compressor.release.value = 0.1;
-*/
-compressor.connect(context.destination);
 
 
 var convolver = context.createConvolver();
