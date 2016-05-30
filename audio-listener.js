@@ -144,15 +144,15 @@ function go(state, setCursor, setActivePatternSection, getActivePatternSection) 
   }
 }
 
-var Snare = require('../808/snare/index');
-var Kick8 = require('../808/kick-eight/index');
-var HiHat = require('../808/hi-hat/index');
-var Conga = require('../808/conga/index');
-var RimShot = require('../808/rim-shot/index');
-var Clap = require('../808/clappy/index');
-var CowBell = require('../808/cow-bell/index');
-var Maracas = require('../808/maracas/index');
-var Claves = require('../808/claves/index');
+var Snare = require('snare');
+var Kick8 = require('kick-eight');
+var HiHat = require('hi-hat');
+var Conga = require('tom-tom');
+var RimShot = require('rim-shot');
+var Clap = require('clappy');
+var CowBell = require('cow-bell');
+var Maracas = require('maracas');
+var Claves = require('claves');
 
 var hiHat = HiHat(context);
 
