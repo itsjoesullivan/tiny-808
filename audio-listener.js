@@ -171,63 +171,113 @@ var sources = [
   [hiHat.bind(null, false)] // CH
 ];
 
+window.oneShot = function oneShot(index, state) {
+
+  var sound = state.sounds[index];
+  var currentModeIndex = sound.currentModeIndex;
+  var shortName = sound.modes[sound.currentModeIndex].shortName;
+  var properties = sound.properties;
+  var accent = false;
+  var accentValue = 0;
+  var playing = true;
+  var when = context.currentTime;
+
+
+  scheduleHit({
+    index,
+    currentModeIndex,
+    shortName,
+    properties,
+    accent,
+    accentValue,
+    when
+  });
+
+}
+
+
+
 function scheduleTick(state) {
   state.sounds.forEach(function(sound, i) {
+
     if (isFirefox) {
       return;
     }
+
+    var index = i;
+    var currentModeIndex = sound.currentModeIndex;
+    var shortName = sound.modes[sound.currentModeIndex].shortName;
+    var properties = sound.properties;
     var accent = state.pattern[0][state.activePatternSection][state.cursor] === 1;
+    var playing = state.pattern[i][state.activePatternSection][state.cursor] === 1;
     if (accent) {
       var accentValue = state.sounds[0].properties[0].value;
-1}
-    if (i === 0) {
-      return;
+    } else {
+      accentValue = 0;
     }
-    var pattern = state.pattern[i][state.activePatternSection];
-    if (pattern[state.cursor] !== 0) {
-      var factory = sources[i][sound.currentModeIndex];
-      if (!factory) {
-        return;
-      }
-      var name = sound.modes[sound.currentModeIndex].shortName;
-      var node = factory();
-      sound.properties.forEach(function(property) {
-        if (/^sd$/i.test(name)) {
-          if (property.name !== "level" && node[property.name] instanceof window.AudioParam) {
-            node[property.name].value = property.value / 127;;
-          }
-        } else if (/^(l|m|h)(c|t)$/i.test(name)) {
-          // toms
-          node.frequency *= 1 + (sound.properties.filter(function(prop) { return prop.name === "tuning" })[0].value - 64) / 127;
-        } else if (/^oh$/i.test(name)) {
-          var decay = sound.properties.filter(function(prop) { return prop.name === "decay" })[0].value;
-          node.duration *= 1 + (decay - 100) / 127;
-        } else if (/^bd$/i.test(name)) {
-          var decay = sound.properties.filter(function(prop) { return prop.name === "decay" })[0].value;
-          var tone = sound.properties.filter(function(prop) { return prop.name === "tone" })[0].value;
-          node.decay = decay;
-          node.tone = tone;
-        }
-      });
+    var when = lastCursorTickAt + 0.05;
 
-      var level = sound.properties.filter(function(property) {
-        return property.name === "level";
-      })[0].value / 127;
-
-      if (accent) {
-        level *= 1 + (accentValue / 127);
-      }
-
-      var gainNode = context.createGain();
-      gainNode.gain.value = level;
-
-      node.connect(gainNode);
-      //gainNode.connect(context.destination);
-      gainNode.connect(compressor);
-
-      node.start(lastCursorTickAt + 0.05);
-
-
+    if (index > 0 && playing) {
+      scheduleHit({
+        index,
+        currentModeIndex,
+        shortName,
+        properties,
+        accent,
+        accentValue,
+        when});
     }
   });
+}
+
+function scheduleHit(settings) {
+  let {
+    index,
+    currentModeIndex,
+    shortName,
+    properties,
+    accent,
+    accentValue,
+    when
+  } = settings;
+
+  var factory = sources[index][currentModeIndex];
+
+  if (typeof factory !== 'function') {
+    return;
+  }
+
+  var node = factory();
+
+  properties.forEach(function(property) {
+    if (/^sd$/i.test(shortName)) {
+      if (property.name !== "level" && node[property.name] instanceof window.AudioParam) {
+        node[property.name].value = property.value / 127;;
+      }
+    } else if (/^(l|m|h)(c|t)$/i.test(shortName)) {
+      // toms
+      node.frequency *= 1 + (properties.filter(function(prop) { return prop.name === "tuning" })[0].value - 64) / 127;
+    } else if (/^oh$/i.test(shortName)) {
+      var decay = properties.filter(function(prop) { return prop.name === "decay" })[0].value;
+      node.duration *= 1 + (decay - 100) / 127;
+    } else if (/^bd$/i.test(shortName)) {
+      var decay = properties.filter(function(prop) { return prop.name === "decay" })[0].value;
+      var tone = properties.filter(function(prop) { return prop.name === "tone" })[0].value;
+      node.decay = decay;
+      node.tone = tone;
+    }
+  });
+
+  var level = properties.filter(function(property) {
+    return property.name === 'level';
+  })[0].value / 127;
+  if (accent) {
+    level *= 1 + (accentValue / 127);
+  }
+  var gainNode = context.createGain();
+  gainNode.gain.value = level;
+
+  node.connect(gainNode);
+  gainNode.connect(compressor);
+  node.start(when);
 }

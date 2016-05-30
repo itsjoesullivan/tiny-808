@@ -467,7 +467,7 @@ export default function todos(state = (savedState || initialState), action) {
           break;
       }
       if (typeof index === 'number') {
-        if (newState.playing) {
+        if (newState.playing && !action.shift) {
           var currentVal = newState.pattern[index][state.activePatternSection][state.cursor];
           var newVal;
           if (currentVal === 1) {
@@ -476,6 +476,9 @@ export default function todos(state = (savedState || initialState), action) {
             newVal = 1;
           }
           newState.pattern[index][state.activePatternSection][state.cursor] = newVal;
+        }
+        if (!action.shift) {
+          window.oneShot(index, state);
         }
         newState.activeSoundIndex = index;
       }

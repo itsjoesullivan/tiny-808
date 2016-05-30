@@ -69,9 +69,13 @@ export function handleGeneralKeyDown(e) {
   var target = e.target;
   if (/(input|button|select|option)/i.test(target.tagName)) {
     return { type: ''};
-  } else if (e.metaKey || e.shiftKey || e.ctrlKey) {
+  } else if (e.metaKey /*|| e.shiftKey*/ || e.ctrlKey) {
     return { type: ''};
   } else {
-    return { type: 'GENERAL_KEYDOWN', which: e.which };
+    return { type: 'GENERAL_KEYDOWN', which: e.which, shift: e.shiftKey };
   }
 };
+
+export function handleGeneralKeyUp(e) {
+  return { type: 'GENERAL_KEY_UP', which: e.which };
+}
