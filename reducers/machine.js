@@ -467,20 +467,27 @@ export default function todos(state = (savedState || initialState), action) {
           break;
       }
       if (typeof index === 'number') {
-        if (newState.playing && !action.shift) {
-          var currentVal = newState.pattern[index][state.activePatternSection][state.cursor];
-          var newVal;
-          if (currentVal === 1) {
-            newVal = 0;
-          } else {
-            newVal = 1;
-          }
-          newState.pattern[index][state.activePatternSection][state.cursor] = newVal;
-        }
-        if (!action.shift) {
+        if (state.playing) {
           window.oneShot(index, state);
+          if (action.shift) {
+            // Add
+            var currentVal = newState.pattern[index][state.activePatternSection][state.cursor];
+            var newVal;
+            if (currentVal === 1) {
+              newVal = 0;
+            } else {
+              newVal = 1;
+            }
+            newState.pattern[index][state.activePatternSection][state.cursor] = newVal;
+          }
+          newState.activeSoundIndex = index;
+        } else {
+          if (action.shift) {
+            newState.activeSoundIndex = index;
+          } else {
+            window.oneShot(index, state);
+          }
         }
-        newState.activeSoundIndex = index;
       }
       return newState;
       break;
