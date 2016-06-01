@@ -468,6 +468,7 @@ export default function todos(state = (savedState || initialState), action) {
       }
       if (typeof index === 'number') {
         if (state.playing) {
+          // Seems like a bad practice to call this here.
           window.oneShot(index, state);
           if (action.shift) {
             // Add
@@ -485,6 +486,7 @@ export default function todos(state = (savedState || initialState), action) {
           if (action.shift) {
             newState.activeSoundIndex = index;
           } else {
+            // Seems like a bad practice to call this here.
             window.oneShot(index, state);
           }
         }
