@@ -23,6 +23,7 @@
     "maracas": "^1.0.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
+    "react-lite": "^0.15.14",
     "react-redux": "^4.2.1",
     "redux": "^3.2.1",
     "rim-shot": "^1.1.0",
