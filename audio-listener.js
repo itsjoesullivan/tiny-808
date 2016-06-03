@@ -1,4 +1,4 @@
-var throttle = require('lodash/throttle')
+var throttle = require('./lib/throttle');
 var lastCursorTickAt = false;
 var lastCursor = 0;
 var context = new (window.AudioContext || window.webkitAudioContext)();
