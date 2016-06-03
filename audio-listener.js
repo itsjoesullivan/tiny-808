@@ -1,7 +1,19 @@
+var Snare = require('snare');
+var Kick8 = require('kick-eight');
+var HiHat = require('hi-hat');
+var Conga = require('tom-tom');
+var RimShot = require('rim-shot');
+var Clap = require('clappy');
+var CowBell = require('cow-bell');
+var Maracas = require('maracas');
+var Claves = require('claves');
+
+
 var throttle = require('./lib/throttle');
 var lastCursorTickAt = false;
 var lastCursor = 0;
 var context = new (window.AudioContext || window.webkitAudioContext)();
+
 
 
 var compressor = context.createDynamicsCompressor();
@@ -12,42 +24,9 @@ compressor.attack.value = 0.003;
 compressor.release.value = 0.1;
 
 
-var convolver = context.createConvolver();
-/*
-var ajaxRequest = new XMLHttpRequest();
-ajaxRequest.open('GET', '/bright.mp3', true);
-ajaxRequest.responseType = 'arraybuffer';
-
-ajaxRequest.onload = function() {
-  var audioData = ajaxRequest.response;
-  context.decodeAudioData(audioData, function(buffer) {
-    convolver.buffer = buffer;
-  }, function(e){"Error with decoding audio data" + e.err});
-}
-
-ajaxRequest.send();
-*/
-
-convolver.connect(context.destination);
-
-
 var filter = context.createBiquadFilter();
 filter.type = 'highpass';
 filter.frequency.value = 300;
-
-var wet = context.createGain();
-//wet.connect(filter);
-//filter.connect(convolver);
-wet.gain.value = 0.03;
-//wet.connect(convolver);
-
-
-compressor.connect(wet);
-
-
-
-
-window.context = context;
 
 var isFirefox = /Firefox/.test(navigator.userAgent);
 
@@ -144,15 +123,6 @@ function go(state, setCursor, setActivePatternSection, getActivePatternSection) 
   }
 }
 
-var Snare = require('snare');
-var Kick8 = require('kick-eight');
-var HiHat = require('hi-hat');
-var Conga = require('tom-tom');
-var RimShot = require('rim-shot');
-var Clap = require('clappy');
-var CowBell = require('cow-bell');
-var Maracas = require('maracas');
-var Claves = require('claves');
 
 var hiHat = HiHat(context);
 

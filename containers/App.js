@@ -15,11 +15,6 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
-  machine: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
-}
-
 function mapStateToProps(state) {
   return {
     machine: state.machine
