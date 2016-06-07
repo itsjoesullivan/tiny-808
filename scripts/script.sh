@@ -8,7 +8,5 @@ cp index.html dist/index.html
 mv dist/index2.html dist/index.html
 sed -i -e "s/\/static\/bundle\.js/http\:\/\/dyclrq6t27il\.cloudfront\.net\/bundle-$HASH\.js/g" dist/index.html
 echo "dist"
-ls dist
-rm dist/index.html-e
 gzip dist/index.html
 mv dist/index.html.gz dist/index.html
