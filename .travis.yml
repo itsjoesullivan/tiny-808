@@ -1,5 +1,10 @@
 install: ./scripts/install.sh
 deploy: ./scripts/install.sh
+deploy:
+  provider: script
+  script: ./scripts/deploy.sh
+  on:
+    branch: master
 script: ./scripts/script.sh
 language: node_js
 node_js: "5"
