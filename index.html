@@ -5,29 +5,154 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="tiny-808 is a small drum machine!">
     <meta property="og:image" content="http://tiny-808.com/og_image.jpg" />
+<style>
+html, body {
+  font-family: Verdana, Geneva, sans-serif;
+  margin: 0;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 0.3em;
+}
+
+.highlighted {
+  background-color: yellow;
+}
+
+.range-name {
+  font-family: monospace;
+  display: inline-block;
+  width: 2em;
+}
+
+
+.sounds-range {
+  width: 27.4em;
+}
+
+
+label {
+  text-transform: capitalize;
+  display: inline-block;
+  width: 5em;
+  vertical-align: middle;
+}
+
+
+.main {
+  max-width: 320px;
+  margin: auto;
+}
+
+.range-selector-container {
+  text-align: center;
+}
+
+
+input[type=range] {
+  vertical-align: middle;
+}
+
+
+input[type=checkbox] {
+  display: inline-block;
+  width: 14px;
+}
+
+
+.properties {
+  min-height: 4.2em;
+  margin-bottom: 1em;
+}
+
+
+.transport {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+button {
+}
+
+
+.values {
+  font-size: 12px;
+  vertical-align: middle;
+  margin-left: 0.5em;
+}
+
+
+.property-range {
+  width: 15em;
+}
+
+
+.tick-container {
+  display: flex;
+  justify-content: center;
+}
+.tick-container span {
+  width: 21px;
+}
+
+
+.mode-selector {
+  margin-left: 1em;
+  display: inline-block;
+  height: 1em;
+}
+
+.mode-selector span {
+  vertical-align: middle;
+  margin-right: 0.4em;
+}
+
+span {
+  vertical-align: middle;
+}
+.pattern-selector label {
+  width: initial;
+  display: inline-block;
+  min-width: 2em;
+  text-align: right;
+  margin: 0 0.2em;
+  margin-right: 0.1em;
+}
+
+.pattern-selector .active {
+  font-weight: 700;
+
+}
+
+.quarters div {
+  display: inline-block;
+  width: 23%;
+  margin: 1%;
+  border-bottom: 3px solid #bbb;
+}
+
+.sub-header-actions {
+  text-align: right;
+  margin-bottom: 1em;
+}
+</style>
   </head>
   <body>
     <div id="root">
     </div>
     <script src="/static/bundle.js"></script>
-    <script type="text/template" id="ga">
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        a.onload = function() {
-          ga('create', 'UA-78244711-1', 'auto');
-          ga('send', 'pageview');
-        };
-        setTimeout(function() {
-    }, 1000);
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-    </script>
     <script>
       setTimeout(function() {
-        var script = document.createElement('script');
-        script.innerHTML = document.getElementById('ga').innerHTML;
-        document.body.appendChild(script);
-      }, 1000);
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          a.onload = function() {
+            ga('create', 'UA-78244711-1', 'auto');
+            ga('send', 'pageview');
+          };
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      }, 5000);
     </script>
   </body>
 </html>
