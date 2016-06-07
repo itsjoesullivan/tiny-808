@@ -1,4 +1,6 @@
 install: ./scripts/install.sh
+script: ./scripts/script.sh
+deploy: ./scripts/deploy.sh
 language: node_js
 node_js: "5"
 
