@@ -1,13 +1,4 @@
-before_install: ./scripts/before_install.sh
 install: ./scripts/install.sh
-before_script: ./scripts/before_script.sh
-script: ./scripts/script.sh
-after_success: ./scripts/after_success.sh
-after_failure: ./scripts/after_failure.sh
-before_deploy: ./scripts/before_deploy.sh
-deploy: ./scripts/deploy.sh
-after_deploy: ./scripts/after_deploy.sh
-after_script: ./scripts/after_script.sh
 language: node_js
 node_js: "5"
 
