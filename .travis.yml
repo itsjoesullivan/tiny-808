@@ -14,4 +14,3 @@ script: ./scripts/script.sh
 
 language: node_js
 node_js: "5"
-
