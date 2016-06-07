@@ -1,11 +1,17 @@
+before_install: ./scripts/before_install.sh
 install: ./scripts/install.sh
-deploy: ./scripts/install.sh
+after_install: ./scripts/after_install.sh
+
+before_deploy: ./scripts/before_deploy.sh
 deploy:
   provider: script
   script: ./scripts/deploy.sh
   on:
     branch: master
+after_deploy: ./scripts/after_deploy.sh
+
 script: ./scripts/script.sh
+
 language: node_js
 node_js: "5"
 
