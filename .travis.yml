@@ -1,5 +1,7 @@
 before_install: ./scripts/before_install.sh
-install: ./scripts/install.sh
+install:
+  - ./scripts/install.sh
+  - sudo apt-get install s3cmd
 after_install: ./scripts/after_install.sh
 
 before_deploy: ./scripts/before_deploy.sh
