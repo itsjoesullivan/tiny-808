@@ -7,6 +7,5 @@ cp index.html dist/index.html
 ./node_modules/html-minifier/cli.js dist/index.html > dist/index2.html --collapse-whitespace --minify-css --minify-js --remove-attribute-quotes --use-short-doctype
 mv dist/index2.html dist/index.html
 sed -i -e "s/\/static\/bundle\.js/http\:\/\/dyclrq6t27il\.cloudfront\.net\/bundle-$HASH\.js/g" dist/index.html
-echo "dist"
 gzip dist/index.html
 mv dist/index.html.gz dist/index.html
