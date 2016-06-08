@@ -251,3 +251,4 @@ function scheduleHit(settings) {
   gainNode.connect(compressor);
   node.start(when);
 }
+console.log('hello');
