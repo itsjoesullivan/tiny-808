@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 echo "DEPLOY"
+npm install
 NODE_ENV=production ./node_modules/webpack/bin/webpack.js -p --config webpack.production.config.js
 
 ls
