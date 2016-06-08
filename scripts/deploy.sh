@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "DEPLOY"
-echo "VERSION"
-s3cmd --version
+ls
+NODE_ENV=production webpack -p --config webpack.production.config.js
 
 HASH=`cat dist/bundle.js | shasum | awk '{print substr($0,0,5)}'`
 mv dist/bundle.js dist/bundle-$HASH.js
@@ -11,10 +11,6 @@ mv dist/index2.html dist/index.html
 sed -i -e "s/\/static\/bundle\.js/http\:\/\/dyclrq6t27il\.cloudfront\.net\/bundle-$HASH\.js/g" dist/index.html
 gzip dist/index.html
 mv dist/index.html.gz dist/index.html
-
-echo $test_variable
-echo "HASH"
-echo $HASH
 
 s3cmd --access_key=$s3_access_key --secret_key=$s3_secret_key \
   sync dist/ s3://tiny-808.com
