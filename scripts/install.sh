@@ -2,8 +2,7 @@
 echo "INSTALL"
 npm install
 
-wget -O- -q http://s3tools.org/repo/deb-all/stable/s3tools.key | sudo apt-key add -
-sudo wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list
-sudo apt-get update
-
-sudo apt-get -t experimental install s3cmd
+wget http://ufpr.dl.sourceforge.net/project/s3tools/s3cmd/1.6.1/s3cmd-1.6.1.tar.gz
+tar xzf s3cmd-1.6.1.tar.gz
+cd s3cmd-1.6.1
+sudo python setup.py install
