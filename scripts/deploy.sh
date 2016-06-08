@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 echo "DEPLOY"
+echo "VERSION"
+s3cmd --version
 
 HASH=`cat dist/bundle.js | shasum | awk '{print substr($0,0,5)}'`
 mv dist/bundle.js dist/bundle-$HASH.js
